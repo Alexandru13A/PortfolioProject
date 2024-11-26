@@ -1,0 +1,16 @@
+.new_project_button{
+
+  margin-left: 5%; 
+  text-decoration: none; 
+  background-color: blue; 
+  color: white; 
+  padding: 10px; 
+  border-radius: 50px;
+  font-weight: 600;
+
+}
+
+.new_project_button:hover{
+padding: 14px;
+font-weight: 800;
+}

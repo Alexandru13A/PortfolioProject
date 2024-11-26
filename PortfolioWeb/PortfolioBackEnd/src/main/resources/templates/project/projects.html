@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: page_head}" />
+
+<style>
+  .table {
+    margin: 0 auto;
+    width: 90%;
+  }
+
+  .table th,
+  .table td {
+    padding: 5px;
+  }
+</style>
+
+<body>
+  <header th:replace="~{navigation :: navigation_fragment}"/>
+
+  <h2 style="text-align: center;">PROJECTS</h2>
+
+
+  <div style="margin-top: 25px; margin-bottom: 25px;">
+    <a th:href="@{/projects/create}" class="new_project_button" name="New Project" title="New Project">New Project</a>
+  </div>
+
+  <table class="table table-bordered table-hover table-responsive-xl">
+    <thead class="thead-dark">
+
+      <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>DESCRIPTION</th>
+        <th>MAIN IMAGE</th>
+        <th>MANAGE</th>
+      </tr>
+
+    </thead>
+
+    <tbody th:each="project : ${projects}">
+
+      <td th:text="${project.id}"></td>
+      <td th:text="${project.name}"></td>
+      <td th:text="${project.description}"></td>
+      <td><img style="max-width: 50px; max-height: 50px;" th:src="${project.mainImage}" /></td>
+
+      <td>
+        <div th:replace="~{fragments :: delete_edit}"></div>
+      </td>
+
+    </tbody>
+  </table>
+
+
+
+
+
+</body>
+
+
+</html>
