@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="page_head" th:remove="${remove}">
@@ -8,9 +9,11 @@
 
   <link rel="stylesheet" th:href="@{/css/navigation.css}" />
   <link rel="stylesheet" th:href="@{/css/buttons_style.css}" />
-  <link rel="stylesheet" th:href="@{/css/projects_table.css}" />
+  <link rel="stylesheet" th:href="@{/css/table.css}" />
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -22,17 +25,19 @@
 
 <body>
 
-
-  <div th:fragment="delete_edit" th:remove="tag">
-    <a th:href="@{'/project/edit'+${project.id}}" title="Edit Project">
-      <img th:src="@{/images/buttons/edit.png}" style="max-height: 25px; max-width:25px; margin-right: 5px;"/>
+  <div th:fragment="view_delete_edit" th:remove="tag"
+    style="display: flex; flex-direction: column; align-items: center;">
+    <a th:href="@{'/projects/view/'+${project.id}}" title="View Project">
+      <img th:src="@{/images/buttons/view.png}" style="max-height: 35px; max-width: 35px; margin-top: 4px;" />
     </a>
-    &nbsp;
-    <a th:href="@{'/project/delete'+${project.id}}" title="Delete Project">
-      <img th:src="@{/images/buttons/delete.png}" style="max-height: 25px; max-width:25px;"/>
+    <a th:href="@{'/projects/edit/'+${project.id}}" title="Edit Project">
+      <img th:src="@{/images/buttons/edit.png}" style="max-height: 35px; max-width: 35px; margin-top: 4px;" />
+    </a>
+    <a th:href="@{'/projects/delete/'+${project.id}}" class="btn-delete" title="Delete Project"
+      onclick="return confirmDelete(event);">
+      <img th:src="@{/images/buttons/delete.png}" style="max-height: 35px; max-width: 35px; margin-top: 4px;" />
     </a>
   </div>
-
 
 
 </body>

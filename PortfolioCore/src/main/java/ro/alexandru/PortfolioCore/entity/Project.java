@@ -2,9 +2,11 @@ package ro.alexandru.PortfolioCore.entity;
 
 import java.util.List;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,15 +23,15 @@ public class Project {
   @Column(name = "project_name")
   private String name;
 
-  @Column(name = "project_description")
+  @Column(length = 4096, name = "project_description")
   private String description;
 
   @Lob
-  @Column(name = "main_image")
+  @Basic(fetch = FetchType.EAGER)
   private byte[] mainImage;
 
-  @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Image> images;
+  @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+  private List<Image> extraImages;
 
   public Project() {
   }
@@ -39,15 +41,13 @@ public class Project {
     this.description = description;
   }
 
-
-  public Project(int id, String name, String description, byte[] mainImage, List<Image> images) {
+  public Project(int id, String name, String description, byte[] mainImage, List<Image> extraImages) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.mainImage = mainImage;
-    this.images = images;
+    this.extraImages = extraImages;
   }
-
 
   public Integer getId() {
     return this.id;
@@ -73,15 +73,13 @@ public class Project {
     this.description = description;
   }
 
-
-  public List<Image> getImages() {
-    return this.images;
+  public List<Image> getExtraImages() {
+    return this.extraImages;
   }
 
-  public void setImages(List<Image> images) {
-    this.images = images;
+  public void setExtraImages(List<Image> extraImages) {
+    this.extraImages = extraImages;
   }
-
 
   public byte[] getMainImage() {
     return this.mainImage;
@@ -91,20 +89,15 @@ public class Project {
     this.mainImage = mainImage;
   }
 
-
-
   @Override
   public String toString() {
     return "{" +
-      " id='" + getId() + "'" +
-      ", name='" + getName() + "'" +
-      ", description='" + getDescription() + "'" +
-      ", mainImage='" + getMainImage() + "'" +
-      ", images='" + getImages() + "'" +
-      "}";
+        " id='" + getId() + "'" +
+        ", name='" + getName() + "'" +
+        ", description='" + getDescription() + "'" +
+        ", mainImage='" + getMainImage() + "'" +
+        ", extraImages='" + getExtraImages() + "'" +
+        "}";
   }
-
-
-
 
 }

@@ -1,0 +1,41 @@
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Pentru o experiență mai bună pe mobile */
+}
+
+.table-projects {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.table-projects th, .table-projects td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.table-projects th {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.table-projects img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+  .table-projects th, .table-projects td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .table-projects img {
+    max-width: 80px;
+    max-height: 80px;
+  }
+}

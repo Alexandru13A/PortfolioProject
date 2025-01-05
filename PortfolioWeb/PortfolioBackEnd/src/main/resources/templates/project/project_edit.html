@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: page_head}" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+    <header th:replace="~{navigation :: navigation_fragment}" />
+
+    <div>
+        <h2 style="text-align: center;">EDIT PROJECT</h2>
+    </div>
+
+    <form style="margin: 5%;" th:action="@{/projects/update}" method="post" th:object="${project}"
+        enctype="multipart/form-data">
+        <div class="border border-secondary rounded p-3">
+
+            <input type="hidden" name="projectId" th:field="*{id}" />
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Project Name: </label>
+                <div class="col-sm-8">
+                    <input type="text" th:field="*{name}" class="form-control" required="required" maxlength="255"
+                        minlength="4" />
+                </div>
+            </div>
+
+            <div style="margin-top: 15px;" class="form-group row">
+                <label class="col-sm-4 col-form-label">Project Description: </label>
+                <div class="col-sm-8">
+                    <textarea type="text" th:field="*{description}" class="form-control" required="required" rows="5"
+                        cols="50" minlength="4"></textarea>
+                </div>
+            </div>
+
+            <div style="margin-top: 15px;" class="form-group row">
+                <label class="col-sm-4 col-form-label">Main Image: </label>
+                <img class="main-image img-fluid" th:src="@{'/project/image/'+${project.id}}" alt="Main Project Image"
+                    style="height: 50%; width: 50%; " />
+                <div class="col-sm-8">
+                    <input type="file" id="mainImage" name="mainImage" th:field="*{mainImage}"
+                        accept="image/png, image/jpeg" />
+                </div>
+            </div>
+
+            <div style="margin-top: 15px;" class="form-group row">
+                <label class="col-sm-4 col-form-label">Existing Images: </label>
+                <div class="col-sm-8">
+                    <ul id="image-list">
+                        <li th:each="image : ${project.extraImages}" th:id="'image-' + ${image.id}">
+                            <img class="extra-image img-fluid rounded" alt="Responsive image"
+                                th:src="@{'/images/'+${image.id}}" style="height: 40%; width: 40%; margin-top: 5px;" />
+                            <button type="button" th:onclick="deleteImage([[${project.id}]], [[${image.id}]])">
+                                Delete
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 15px;" class="form-group row">
+                <label class="col-sm-4 col-form-label">Add Extra Images: </label>
+                <div class="col-sm-8">
+                    <input type="file" id="extraImages" name="extraImages" accept="image/png, image/jpeg" multiple />
+                    <button type="button" th:onclick="addImages([[${project.id}]])">Upload</button>
+                </div>
+            </div>
+
+            <div style="margin-top: 15px;" class="text-center">
+                <input type="submit" value="Save Changes" class="button" />
+            </div>
+
+        </div>
+    </form>
+
+    <script type="text/javascript">
+
+        const pathVariable = "/admin"
+
+        function deleteImage(projectId, imageId) {
+            const url = pathVariable + `/images/${projectId}/remove/${imageId}`;
+            console.log(`Constructed URL: ${url}`); // Verificare URL
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                success: function () {
+                    console.log('Image deleted successfully.');
+                    $(`#image-${imageId}`).remove();
+                },
+                error: function (xhr) {
+                    console.error('Error deleting image:', xhr.responseText);
+                    alert('Error deleting image.');
+                }
+            });
+        }
+        function addImages(projectId) {
+            const formData = new FormData();
+            const files = $('#extraImages')[0].files;
+            for (let i = 0; i < files.length; i++) {
+                formData.append('files', files[i]);
+            }
+
+            $.ajax({
+                url: pathVariable + `/images/${projectId}/add`,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    alert('Images uploaded successfully!');
+                    location.reload(); // Reîncarcă pagina automat
+                },
+                error: function () {
+                    alert('Error uploading images.');
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

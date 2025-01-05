@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="~{fragments :: page_head}" />
+
+
+<body>
+
+  <header th:replace="~{navigation :: navigation_fragment}" />
+
+  <div>
+    <h2 style="text-align: center;">PROJECT DETAILS</h2>
+  </div>
+  &nbsp;
+  <div>
+    <h2 style="text-align: center;">[[${project.name}]]</h2>
+  </div>
+
+  <div style="margin: 5%;" class="border border-secondary rounded p-3">
+
+    <h4 style="text-align: center;">Project Name</h4>
+    <h6 style="text-align: center;">[[${project.name}]]</h6>
+
+    <div class="border border-secondary rounded p-3 text-center">
+      <b>Description:</b>
+      <p>[[${project.description}]]</p>
+      <br>
+
+      <b>Main Image:</b>
+      <br>
+      <img class="main-image img-fluid" th:src="@{'/project/image/'+${project.id}}" alt="Main Project Image" style="height: 50%; width: 50%; "/>
+      <br>
+      <b>Extra Images</b>
+      <div class="extra-images-container" th:each="image : ${images}">
+        <br>
+        <img class="extra-image img-fluid rounded" alt="Responsive image" th:src="@{'/images/'+${image.id}}"style="height: 40%; width: 40%; " />
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+</body>
+
+</body>
+
+
+
+
+</body>
+
+
+
+
+</html>

@@ -1,6 +1,8 @@
 package ro.alexandru.PortfolioCore.entity;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,10 +18,10 @@ public class Image {
   private int id;
 
   @Lob
+  @Basic(fetch = FetchType.LAZY)
   private byte[] data;
 
   private String fileName;
-  private String contentType;
 
   @OneToOne
   @JoinColumn(name = "certification")
@@ -37,19 +39,17 @@ public class Image {
     this.data = data;
   }
 
-  public Image(int id, byte[] data, String fileName, String contentType, Certification certification) {
+  public Image(int id, byte[] data, String fileName,Certification certification) {
     this.id = id;
     this.data = data;
     this.fileName = fileName;
-    this.contentType = contentType;
     this.certification = certification;
   }
 
-  public Image(int id, byte[] data,String fileName, String contentType, Project project) {
+  public Image(int id, byte[] data,String fileName,Project project) {
     this.id = id;
     this.data = data;
     this.fileName = fileName;
-    this.contentType = contentType;
     this.project = project;
   }
 
@@ -84,14 +84,6 @@ public class Image {
 
   public void setFileName(String fileName) {
     this.fileName = fileName;
-  }
-
-  public String getContentType() {
-    return this.contentType;
-  }
-
-  public void setContentType(String contentType) {
-    this.contentType = contentType;
   }
 
   public Certification getCertification() {

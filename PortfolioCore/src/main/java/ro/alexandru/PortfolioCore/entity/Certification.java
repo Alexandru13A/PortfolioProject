@@ -1,11 +1,11 @@
 package ro.alexandru.PortfolioCore.entity;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.Lob;
 
 @Entity
 public class Certification {
@@ -16,14 +16,14 @@ public class Certification {
 
   private String name;
 
+  @Lob
+  @Column(name = "description")
   private String certificateDescription;
 
-  // @ManyToOne
-  // @JoinColumn(name = "description_id")
-  // private Description description;
+  @Lob
+  @Column(name="certification_image")
+  private byte[] certificationImage;
 
-  @OneToOne(mappedBy = "certification", cascade = CascadeType.ALL)
-  private Image image;
   
 
 
@@ -31,24 +31,12 @@ public class Certification {
   }
 
 
-  public Certification(Integer id, String name, String certificateDescription, Image image) {
+  public Certification(Integer id, String name, String certificateDescription, byte[] certificationImage) {
     this.id = id;
     this.name = name;
     this.certificateDescription = certificateDescription;
-    this.image = image;
+    this.certificationImage = certificationImage;
   }
-
-
-
-  // public Certification(Integer id, String name, String certificateDescription, Description description, Image image) {
-  //   this.id = id;
-  //   this.name = name;
-  //   this.certificateDescription = certificateDescription;
-  //   this.description = description;
-  //   this.image = image;
-  // }
-
-
 
   public Integer getId() {
     return this.id;
@@ -74,20 +62,12 @@ public class Certification {
     this.certificateDescription = certificateDescription;
   }
 
-  // public Description getDescription() {
-  //   return this.description;
-  // }
-
-  // public void setDescription(Description description) {
-  //   this.description = description;
-  // }
-
-  public Image getImage() {
-    return this.image;
+  public byte[] getImage() {
+    return this.certificationImage;
   }
 
-  public void setImage(Image image) {
-    this.image = image;
+  public void setImage(byte[] certificationImage) {
+    this.certificationImage = certificationImage;
   }
 
 
